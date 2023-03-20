@@ -136,10 +136,12 @@ int parseData(char *inputFileName, int **ppData){
 		fscanf(inFile,"%d\n",&dataSz);
 		*ppData = (int *)malloc(sizeof(int) * dataSz);
 		// Implement parse data block
+		int temp;
+		int array[dataSz];
 		for(int i = 0; i < dataSz; i++){
-			fscanf(inFile, "%d ", *(ppData+i));
-			
+			fscanf(inFile, "%d ", &array[i]);
 		}
+		*ppData = array;
 	}
 	
 	return dataSz;
@@ -161,15 +163,15 @@ void printArray(int pData[], int dataSz){
 }
 
 int main(void){
+	
 	clock_t start, end;
 	int i;
     double cpu_time_used;
 	char* fileNames[] = {"input1.txt", "input2.txt", "input3.txt"};
-	
+	int *pDataSrc, *pDataCopy;
 	for (i=0;i<3;++i){
-		int *pDataSrc, *pDataCopy;
-		int dataSz = parseData(fileNames[i], &pDataSrc);
 		
+		int dataSz = parseData(fileNames[i], &pDataSrc);
 		if (dataSz <= 0){
 			continue;
 		}
@@ -177,7 +179,7 @@ int main(void){
 		pDataCopy = (int *)malloc(sizeof(int)*dataSz);
 	
 		printf("---------------------------\n");
-		printf("Dataset Size : %d\n",dataSz);
+		printf("Dataset Size : %d\n", dataSz);
 		printf("---------------------------\n");
 		
 		printf("Selection Sort:\n");
@@ -226,8 +228,9 @@ int main(void){
 		printArray(pDataCopy, dataSz);
 		
 		
-		free(pDataCopy);
-		free(pDataSrc);
+		
 	}
+	free(pDataCopy);
+	free(pDataSrc);
 	
 }
