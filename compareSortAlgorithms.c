@@ -13,6 +13,7 @@ void merge(int arr[], int l, int m, int r){
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
+	extraMemoryAllocated += sizeof(int)*(n1+n2);
   
     //create two arrays
     int L[n1], R[n2];
@@ -136,12 +137,9 @@ int parseData(char *inputFileName, int **ppData){
 		fscanf(inFile,"%d\n",&dataSz);
 		*ppData = (int *)malloc(sizeof(int) * dataSz);
 		// Implement parse data block
-		int temp;
-		int array[dataSz];
 		for(int i = 0; i < dataSz; i++){
-			fscanf(inFile, "%d ", &array[i]);
+			fscanf(inFile, "%i", &(*ppData)[i]);
 		}
-		*ppData = array;
 	}
 	
 	return dataSz;
@@ -149,12 +147,13 @@ int parseData(char *inputFileName, int **ppData){
 
 // prints first and last 100 items in the data array
 void printArray(int pData[], int dataSz){
+	
 	int i, sz = dataSz - 100;
-	printf("\tData:\n\t");
+	printf("\tData:\n");
 	for (i=0;i<100;++i){
 		printf("%d ",pData[i]);
 	}
-	printf("\n\t");
+	printf("\n\n");
 	
 	for (i=sz;i<dataSz;++i){
 		printf("%d ",pData[i]);
